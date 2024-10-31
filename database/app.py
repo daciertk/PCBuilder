@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import mysql.connector
 app = Flask(__name__)
 
-con = mysql.connector.connect(host="localhost", user="root", password="grannygear1952", database="pcpartfinder")
+con = mysql.connector.connect(host="localhost", user="root", database="pcpartfinder")
 cur = con.cursor()
 
 
