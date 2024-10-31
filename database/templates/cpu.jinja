@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Processors</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <div>
+        <a href = "/">Home</a>
+        <a href = "/build">Your Build</a>
+        
+    </div>
+    <form id="search_form">
+        <input id="search" type="text" placeholder="Enter CPU Search" id="search_val">
+        <input type="submit" value="Search for CPU">
+    </form>
+    <script>
+        let search_form = document.getElementById("search_form");
+        search_form.addEventListener("submit", function(event){
+            event.preventDefault();
+            let search = document.getElementById("search").value;
+            search_no_spaces = "/cpu/search/"+search.replace(/\s+/g, '-');
+            window.location.href = (search_no_spaces);
+        });
+    
+    </script>
+    {% if data%}
+    <div id="table_div"></div>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['table'] });
+        google.charts.setOnLoadCallback(drawTable);
+        function add_processor(row){
+
+        }
+        function drawTable(){
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'CPU Name');
+            data.addColumn('string', 'Price');
+            data.addColumn('string', 'Core Count');
+            data.addColumn('string', 'Core Clock');
+            data.addColumn('string', 'Boost Clock');
+            data.addColumn('string', 'TDP');
+            data.addColumn('string', 'Graphics');
+            data.addColumn('string', 'SMT');
+            data.addColumn('string', 'Add Processer');
+            
+            var add_processor = new google.visualization.PatternFormat(
+                '<a href='/'></a>'
+            )
+           
+
+        
+        data.addRows([
+            {% for row in data %}
+            [
+                {% for i in range(8) %}
+                '{{ row[i] }}'{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                    , '<a href="/cpu/{{ row[0] | urlencode }}">Add Processor</a>'  // Adjust the URL as needed
+            ],
+        {% endfor %}
+    ]);
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+            table.draw(data, { showRowNumber: true, page: true, pageSize: 50, allowHtml:true });
+           
+        }
+    </script>
+    {%endif%}
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {%if data%}
+    <title>{{data[0]}} </title>
+    {%else%}
+    <title>CPU Home</title>
+    {%endif%}
+</head>
+
+<body>
+    {%if data%}
+    <p>CPU: {{data[0]}}</p>
+    <p>Price: {{data[1]}}</p>
+    <p>Number of cores: {{data[2]}}</p>
+    <p>Core Clock Speed: {{data[3]}}</p>
+    <p>Boost Clock Speed: {{data[4]}}</p>
+    <p>Graphics: {{data[6]}}</p>
+
+    {%endif%}
+    <a href="/build/cpu/{{data[0]}}">
+    <button>Add to Build</button>
+    </a>
+</body>
+
+</html>

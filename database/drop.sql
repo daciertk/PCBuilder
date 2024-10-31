@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS cpu;
+DROP TABLE IF EXISTS motherboard;

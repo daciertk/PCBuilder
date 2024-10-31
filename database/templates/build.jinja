@@ -1,0 +1,41 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title> PC Build</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <h1> Your Build</h1>
+    {% if data%}
+    <p> {{data[0]}}</p>
+    
+    <div id="table_div"></div>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['table'] });
+        google.charts.setOnLoadCallback(drawTable);
+       
+        function drawTable(){
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Component Type');
+            data.addColumn('string', 'Component Name');
+            data.addColumn('string', 'Price');
+            
+        
+        data.addRows([
+            ["CPU", "{{data[1]}}", "{{data[4]}}"],
+            ["Motherboard", "{{data[2]}}", "{{data[12]}}"]
+
+        ]);
+            
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+            table.draw(data, { showRowNumber: true, page: true, pageSize: 50, allowHtml:true });
+           
+        }
+    </script>
+   
+    {%endif%}
+    <a href="/">
+    <button>Add More Parts</button>
+    </a>
+</body>
+</html>

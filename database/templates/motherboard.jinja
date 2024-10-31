@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Motheboards</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+   <div>
+        <a href = "/">Home</a>
+        <a href = "/build">Your Build</a>
+        
+    </div>
+    <form id="search_form">
+        <input id="search" type="text" placeholder="Enter Motherboard Search" id="search_val">
+        <input type="submit" value="Search for Motherboard">
+    </form>
+    <script>
+        let search_form = document.getElementById("search_form");
+        search_form.addEventListener("submit", function(event){
+            event.preventDefault();
+            let search = document.getElementById("search").value;
+            search_no_spaces = "/motherboard/search/"+search.replace(/\s+/g, '-');
+            window.location.href = (search_no_spaces);
+        });
+    
+    </script>
+    {% if data%}
+    <div id="table_div"></div>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['table'] });
+        google.charts.setOnLoadCallback(drawTable);
+
+        function drawTable(){
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'CPU Name');
+            data.addColumn('string', 'Price');
+            data.addColumn('string', 'Socket');
+            data.addColumn('string', 'Form Factor');
+            data.addColumn('string', 'Max Memory');
+            data.addColumn('string', 'Memory Slots');
+            data.addColumn('string', 'Color');
+          
+            data.addColumn('string', 'Add Motherboard');
+            
+            var add_processor = new google.visualization.PatternFormat(
+                '<a href='/'></a>'
+            )
+           
+
+        
+        data.addRows([
+            {% for row in data %}
+            [
+                {% for i in range(7) %}
+                '{{ row[i] }}'{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                    , '<a href="/motherboard/{{ row[0] }}">Add Motherboard</a>'  // Adjust the URL as needed
+            ],
+        {% endfor %}
+    ]);
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+            table.draw(data, { showRowNumber: true, page: true, pageSize: 50, allowHtml:true });
+           
+        }
+    </script>
+    {%endif%}
+</body>
+</html>
